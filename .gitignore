@@ -105,3 +105,4 @@ dist
 
 # Library Config
 config.json
+stats.json
