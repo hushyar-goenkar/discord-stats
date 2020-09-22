@@ -1,0 +1,19 @@
+{
+  "name": "discord-stats",
+  "version": "0.0.1",
+  "description": "A NodeJS Program To Track Discord Server Stats Via a Bot.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hushyar-goenkar/discord-stats.git"
+  },
+  "author": "HG",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hushyar-goenkar/discord-stats/issues"
+  },
+  "homepage": "https://github.com/hushyar-goenkar/discord-stats#readme"
+}
