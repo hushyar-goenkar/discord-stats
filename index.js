@@ -2,6 +2,7 @@ require('dotenv').config(); // Import env variables
 const { Client } = require('discord.js');
 const fs = require('fs');
 const statsFields = require('./src/constants/statsFields');
+const updateCommandStats = require('./src/commandCounter');
 
 const client = new Client();
 let stats; // Current
@@ -20,6 +21,7 @@ catch (e) {
 
 client.on('message', msg => {
   stats.numMessages++;
+  stats.commands = updateCommandStats(stats.commands, msg);
 })
 
 client.login(process.env.token);
