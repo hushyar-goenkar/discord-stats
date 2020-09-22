@@ -16,6 +16,8 @@ try {
     if (!stats[param]) stats[param] = statsFields[param];
   }
 
+  fs.writeFileSync('stats.json', JSON.stringify(stats));
+
   setInterval(() => {
     fs.writeFileSync('stats.json', JSON.stringify(stats));
   }, 5*1000*60) // every 5 min
