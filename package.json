@@ -4,7 +4,8 @@
   "description": "A NodeJS Program To Track Discord Server Stats Via a Bot.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/hushyar-goenkar/discord-stats/issues"
   },
-  "homepage": "https://github.com/hushyar-goenkar/discord-stats#readme"
+  "homepage": "https://github.com/hushyar-goenkar/discord-stats#readme",
+  "dependencies": {
+    "discord.js": "^12.3.1",
+    "dotenv": "^8.2.0"
+  }
 }
