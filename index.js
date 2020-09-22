@@ -11,21 +11,25 @@ if (!fs.existsSync('stats.json')) fs.writeFileSync('stats.json', JSON.stringify(
 
 try {
   stats = JSON.parse(fs.readFileSync('stats.json'));
-
-  for (let param in statsFields) {
-    if (!stats[param]) stats[param] = statsFields[param];
-  }
-
-  fs.writeFileSync('stats.json', JSON.stringify(stats));
-
-  setInterval(() => {
-    fs.writeFileSync('stats.json', JSON.stringify(stats));
-  }, 5*1000*60) // every 5 min
 }
 catch (e) {
   console.log(`JSON parse error, ${e}, resetting stats`);
   fs.writeFileSync('stats.json', JSON.stringify({}));
 }
+
+for (let param in statsFields) {
+  if (!stats[param]) {
+    stats[param] = statsFields[param];
+
+    if (param == 'runningSince') stats[param] = new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString();
+  }
+}
+
+fs.writeFileSync('stats.json', JSON.stringify(stats));
+
+setInterval(() => {
+  fs.writeFileSync('stats.json', JSON.stringify(stats));
+}, 5*1000*60) // every 5 min
 
 client.on('message', msg => {
   stats.numMessages++;

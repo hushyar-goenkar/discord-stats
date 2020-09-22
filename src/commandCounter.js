@@ -15,7 +15,9 @@ module.exports = function updateCommandStats(currentStats, msg) {
     if (!currentStats[commandList.prefix]) currentStats[commandList.prefix] = {}; // Make sure that this exists in the stats
 
     for (let command of commandList.commands) {
-      if (!currentStats[commandList.prefix][command]) currentStats[commandList.prefix][command] = commandStatsFields; // Make sure that command stats exists
+      if (!currentStats[commandList.prefix][command]) currentStats[commandList.prefix][command] = {
+        ...commandStatsFields
+      } // Make sure that command stats exists
 
       if (
         msg.content.trim().toLowerCase().startsWith(`${commandList.prefix}${command}`.toLowerCase()) && // Check if this is the same command

@@ -3,9 +3,14 @@ const channelStatsFields = require('./constants/channelStatsFields');
 
 module.exports = function updateSeparateChannelStats(currentChannelStats, msg) {
   for (let channel of separateTextChannelStats) {
-    if (!currentChannelStats[channel]) currentChannelStats[channel] = channelStatsFields;
+    if (!currentChannelStats[channel]) currentChannelStats[channel] = { ...channelStatsFields };
 
-    if (separateTextChannelStats.includes(msg.channel.id)) currentChannelStats[channel].numMsgs++;
+    if (
+      separateTextChannelStats.includes(msg.channel.id) &&
+      msg.bot != ignoreBots &&
+      (msg.channel.type == 'dm') != ignoreDMs &&
+      !ignoredUsers.includes(msg.author.id)
+    ) currentChannelStats[channel].numMsgs++;
   }
 
   return currentChannelStats;
