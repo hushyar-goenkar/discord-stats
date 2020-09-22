@@ -18,7 +18,7 @@ module.exports = function updateCommandStats(currentStats, msg) {
       if (!currentStats[commandList.prefix][command]) currentStats[commandList.prefix][command] = commandStatsFields; // Make sure that command stats exists
 
       if (
-        msg.trim().toLowerCase().beginsWith(`${commandList.prefix}${command}`.toLowerCase()) && // Check if this is the same command
+        msg.content.trim().toLowerCase().startsWith(`${commandList.prefix}${command}`.toLowerCase()) && // Check if this is the same command
         msg.bot != ignoreBots &&
         !ignoredUsers.includes(msg.author.id) &&
         (msg.channel.type == 'dm') != ignoreDMs
