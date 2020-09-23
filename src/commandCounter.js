@@ -1,16 +1,18 @@
-const {
-  ignoreDMs,
-  ignoredChannels,
-  ignoredUsers,
-  ignoredList,
-  watchedChannels,
-  watchedCommands,
-  ignoreBots
-} = require('./util/config');
+const { guildConfigs } = require('./util/config');
 
 const commandStatsFields = require('./constants/commandStatsFields');
 
 module.exports = function updateCommandStats(currentStats, msg) {
+  const { 
+    ignoreDMs,
+    ignoredChannels,
+    ignoredUsers,
+    ignoredList,
+    watchedChannels,
+    watchedCommands,
+    ignoreBots
+  } = guildConfigs[msg.guild.id];
+
   for (let commandList of watchedCommands) {
     if (!currentStats[commandList.prefix]) currentStats[commandList.prefix] = {}; // Make sure that this exists in the stats
 

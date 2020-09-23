@@ -1,8 +1,10 @@
-const { ignoreBots, ignoredUsers, ignoreDMs, separateTextChannelStats } = require('./util/config');
+const { guildConfigs } = require('./util/config');
 const channelStatsFields = require('./constants/channelStatsFields');
 const updateCommandStats = require('./commandCounter');
 
 module.exports = function updateSeparateChannelStats(currentChannelStats, msg) {
+  const { ignoreBots, ignoredUsers, ignoreDMs, separateTextChannelStats } = guildConfigs[msg.guild.id];
+
   for (let channel of separateTextChannelStats) {
     if (!currentChannelStats[channel]) currentChannelStats[channel] = { ...channelStatsFields };
 

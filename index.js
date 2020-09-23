@@ -1,27 +1,45 @@
-require('dotenv').config(); // Import env variables
 const { Client } = require('discord.js');
 const fs = require('fs');
 const statsFields = require('./src/constants/statsFields');
 const updateCommandStats = require('./src/commandCounter');
 const updateSeparateChannelStats = require('./src/separateChannelStats');
 
+const { token, guildConfigs } = require('./src/util/config');
+
 const client = new Client();
 let stats; // Current
-if (!fs.existsSync('stats.json')) fs.writeFileSync('stats.json', JSON.stringify(statsFields));
+if (!fs.existsSync('stats.json')) {
+  const initialStats = {};
+
+  for (let guildId in guildConfigs) {
+    initialStats[guildId] = { ...statsFields };
+  }
+
+  fs.writeFileSync('stats.json', JSON.stringify(initialStats));
+}
 
 try {
   stats = JSON.parse(fs.readFileSync('stats.json'));
 }
 catch (e) {
   console.log(`JSON parse error, ${e}, resetting stats`);
-  fs.writeFileSync('stats.json', JSON.stringify({}));
+
+  const initialStats = {};
+
+  for (let guildId in guildConfigs) {
+    initialStats[guildId] = { ...statsFields };
+  }
+
+  fs.writeFileSync('stats.json', JSON.stringify(initialStats));
 }
 
-for (let param in statsFields) {
-  if (!stats[param]) {
-    stats[param] = statsFields[param];
-
-    if (param == 'runningSince') stats[param] = new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString();
+for (let guildId in stats) {
+  for (let param in statsFields) {
+    if (!stats[guildId][param]) {
+      stats[guildId][param] = statsFields[param];
+  
+      if (param == 'runningSince') stats[guildId][param] = new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString();
+    }
   }
 }
 
@@ -32,9 +50,9 @@ setInterval(() => {
 }, 5*1000*60) // every 5 min
 
 client.on('message', msg => {
-  stats.numMessages++;
-  stats.commands = updateCommandStats(stats.commands, msg);
-  stats.separateChannelStats = updateSeparateChannelStats(stats.separateChannelStats, msg);
+  stats[msg.guild.id].numMessages++;
+  stats[msg.guild.id].commands = updateCommandStats(stats[msg.guild.id].commands, msg);
+  stats[msg.guild.id].separateChannelStats = updateSeparateChannelStats(stats[msg.guild.id].separateChannelStats, msg);
 })
 
-client.login(process.env.token);
+client.login(token);
