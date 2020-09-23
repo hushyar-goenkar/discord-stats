@@ -1,3 +1,4 @@
 module.exports = {
-  numMsgs: 0
+  numMsgs: 0,
+  commands: {}
 }
