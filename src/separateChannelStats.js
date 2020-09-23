@@ -6,7 +6,7 @@ module.exports = function updateSeparateChannelStats(currentChannelStats, msg) {
     if (!currentChannelStats[channel]) currentChannelStats[channel] = { ...channelStatsFields };
 
     if (
-      separateTextChannelStats.includes(msg.channel.id) &&
+      msg.channel.id == channel &&
       msg.bot != ignoreBots &&
       (msg.channel.type == 'dm') != ignoreDMs &&
       !ignoredUsers.includes(msg.author.id)
